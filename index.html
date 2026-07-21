@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Vallera builds air-gapped agentic systems for regulated industries — AI that reasons, remembers, and decides entirely inside your perimeter. No cloud. No leakage. Fully auditable.">
+<meta name="theme-color" content="#0e1116">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23c79a4b'%20stroke-width='1.4'%3E%3Cpath%20d='M12%202.5%2020.5%206v6.4c0%204.4-3.4%207.8-8.5%209.1C6.9%2020.2%203.5%2016.8%203.5%2012.4V6L12%202.5Z'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vallera — Sovereign Agentic AI">
+<meta property="og:description" content="Vallera builds air-gapped agentic systems for regulated industries — AI that reasons, remembers, and decides entirely inside your perimeter. No cloud. No leakage. Fully auditable.">
+<meta property="og:url" content="https://vallera.ai/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<title>Vallera — Sovereign Agentic AI</title>
+<style>
+  :root{
+    --stone:#0e1116;
+    --stone-2:#12161d;
+    --panel:#161b23;
+    --panel-2:#1b212b;
+    --line:#252c37;
+    --line-2:#2f3846;
+    --ink:#eceff4;
+    --muted:#93a0b0;
+    --muted-2:#6b7789;
+    --gold:#c79a4b;
+    --gold-hi:#e3bd76;
+    --gold-dim:#8f7238;
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Book Antiqua',Georgia,serif;
+    --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;
+    --ko:'Apple SD Gothic Neo','Pretendard','Malgun Gothic','Noto Sans KR',sans-serif;
+    --maxw:1160px;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--stone);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ---- bilingual switch ---- */
+  /* scope to span.ko so the rule can never match the root <html class="ko"> (that would display:none the whole page) */
+  span.ko{display:none;}
+  html.ko .en{display:none;}
+  html.ko .ko{display:inline;}
+  html.ko .ko{font-family:var(--ko);}
+  html.ko .lead .ko,html.ko p .ko,html.ko li .ko{line-height:1.72;}
+
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:rgba(199,154,75,.28);color:#fff;}
+  :focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:2px;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  html.ko .eyebrow .ko{letter-spacing:.02em;}
+
+  /* ================= NAV ================= */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 28px;
+    max-width:var(--maxw);margin:0 auto;
+    transition:padding .3s var(--ease);
+  }
+  .nav-bg{
+    position:fixed;top:0;left:0;right:0;height:70px;z-index:49;
+    background:linear-gradient(180deg,rgba(14,17,22,.9),rgba(14,17,22,0));
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    opacity:0;transition:opacity .4s var(--ease);pointer-events:none;
+  }
+  .nav-bg.on{opacity:1;}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:20px;letter-spacing:.02em;}
+  .brand .seal{width:22px;height:22px;flex:none;}
+  .brand b{font-weight:600;}
+  .nav-links{display:flex;align-items:center;gap:30px;}
+  .nav-links a{font-size:13.5px;color:var(--muted);letter-spacing:.02em;transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .lang-btn{
+    font-family:var(--mono);font-size:12px;letter-spacing:.1em;
+    color:var(--gold);background:transparent;
+    border:1px solid var(--line-2);border-radius:999px;
+    padding:6px 14px;cursor:pointer;transition:all .2s var(--ease);
+  }
+  .lang-btn:hover{border-color:var(--gold);background:rgba(199,154,75,.08);}
+  @media(max-width:720px){.nav-links a:not(.lang-btn){display:none;}}
+
+  /* ================= HERO ================= */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;align-items:center;
+    padding:120px 0 90px;overflow:hidden;
+  }
+  #perimeter{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero-veil{
+    position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 22% 42%,rgba(14,17,22,.86) 0%,rgba(14,17,22,.5) 42%,rgba(14,17,22,0) 72%),
+      linear-gradient(180deg,rgba(14,17,22,.55),rgba(14,17,22,0) 30%,rgba(14,17,22,.85));
+  }
+  .hero-inner{position:relative;z-index:2;max-width:760px;}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(2.5rem,6.2vw,4.6rem);
+    line-height:1.04;
+    letter-spacing:-.015em;
+    margin:.5em 0 .44em;
+    text-wrap:balance;
+  }
+  html.ko .hero h1{letter-spacing:-.01em;line-height:1.16;font-weight:700;}
+  .hero h1 .accent{color:var(--gold-hi);font-style:italic;}
+  html.ko .hero h1 .accent{font-style:normal;}
+  .lead{
+    font-size:clamp(1.05rem,1.9vw,1.28rem);
+    color:var(--muted);
+    max-width:34em;line-height:1.62;margin:0 0 2.2em;
+  }
+  .lead b{color:var(--ink);font-weight:500;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:15px;font-weight:500;letter-spacing:.01em;
+    padding:14px 24px;border-radius:8px;
+    transition:all .22s var(--ease);cursor:pointer;
+  }
+  .btn-primary{
+    background:linear-gradient(180deg,var(--gold-hi),var(--gold));
+    color:#20160a;border:1px solid var(--gold-hi);
+    box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 10px 30px -12px rgba(199,154,75,.6);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 1px 0 rgba(255,255,255,.3) inset,0 18px 40px -14px rgba(199,154,75,.75);}
+  .btn-ghost{color:var(--ink);border:1px solid var(--line-2);background:rgba(255,255,255,.01);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold-hi);}
+  .btn .arrow{transition:transform .22s var(--ease);}
+  .btn:hover .arrow{transform:translateX(3px);}
+
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+    font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--muted-2);
+    text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px;
+  }
+  .scroll-hint .rule{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:drop 2.4s var(--ease) infinite;}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top;opacity:0;}30%{opacity:1;}100%{transform:scaleY(1);transform-origin:top;opacity:0;}}
+
+  /* ================= SECTION SHELL ================= */
+  section{position:relative;}
+  .band{padding:112px 0;border-top:1px solid var(--line);}
+  .band-head{max-width:640px;margin-bottom:56px;}
+  .band-head h2{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.12;letter-spacing:-.01em;
+    margin:.5em 0 0;text-wrap:balance;
+  }
+  html.ko .band-head h2{font-weight:700;line-height:1.28;}
+
+  /* ---- thesis ---- */
+  .thesis{background:
+    radial-gradient(140% 120% at 85% 0%,rgba(199,154,75,.06),transparent 46%);}
+  .thesis-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;}
+  .thesis-body p{color:var(--muted);font-size:1.12rem;line-height:1.7;margin:0 0 1.25em;max-width:36em;}
+  .thesis-body p b{color:var(--ink);font-weight:500;}
+  .thesis-body .pull{
+    font-family:var(--serif);font-size:1.5rem;line-height:1.34;color:var(--ink);
+    font-style:italic;border-left:2px solid var(--gold);padding-left:22px;margin:0 0 1.4em;max-width:none;
+  }
+  html.ko .thesis-body .pull{font-style:normal;}
+  .thesis-side{
+    border:1px solid var(--line);border-radius:14px;padding:30px;
+    background:linear-gradient(180deg,var(--panel),var(--stone-2));
+  }
+  .thesis-side .eyebrow{margin-bottom:18px;display:block;}
+  .contrast{display:flex;flex-direction:column;gap:1px;background:var(--line);border-radius:10px;overflow:hidden;}
+  .contrast .row{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:16px 18px;background:var(--panel-2);align-items:center;}
+  .contrast .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);}
+  .contrast .old{color:var(--muted);}
+  .contrast .new{color:var(--ink);}
+  .contrast .new::before{content:"→ ";color:var(--gold);}
+  @media(max-width:860px){.thesis-grid{grid-template-columns:1fr;gap:40px;}}
+
+  /* ================= PILLARS ================= */
+  .pillars-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;}
+  .pillar{
+    grid-column:span 6;
+    position:relative;
+    border:1px solid var(--line);border-radius:16px;
+    padding:34px 34px 38px;
+    background:linear-gradient(180deg,var(--panel),var(--stone-2));
+    overflow:hidden;
+    transition:border-color .3s var(--ease),transform .3s var(--ease);
+  }
+  .pillar.wide{grid-column:span 7;}
+  .pillar.narrow{grid-column:span 5;}
+  .pillar::after{
+    content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;
+    background:radial-gradient(90% 120% at 100% 0%,rgba(199,154,75,.09),transparent 55%);
+    opacity:0;transition:opacity .3s var(--ease);
+  }
+  .pillar:hover{border-color:var(--line-2);transform:translateY(-3px);}
+  .pillar:hover::after{opacity:1;}
+  .pillar .glyph{width:40px;height:40px;color:var(--gold);margin-bottom:22px;opacity:.92;}
+  .pillar .tag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);}
+  .pillar .badge{
+    position:absolute;top:28px;right:28px;z-index:2;
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);border:1px solid var(--gold-dim);border-radius:999px;
+    padding:5px 11px;display:inline-flex;align-items:center;gap:7px;
+    background:rgba(199,154,75,.06);
+  }
+  html.ko .pillar .badge{letter-spacing:.02em;}
+  .pillar .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 7px var(--gold-hi);}
+  @media(prefers-reduced-motion:no-preference){.pillar .badge .dot{animation:beacon 2.6s var(--ease) infinite;}}
+  @keyframes beacon{0%,100%{opacity:.55;}50%{opacity:1;}}
+  .pillar h3{
+    font-family:var(--serif);font-weight:600;font-size:1.5rem;line-height:1.22;
+    margin:10px 0 .55em;letter-spacing:-.005em;
+  }
+  html.ko .pillar h3{font-weight:700;}
+  .pillar p{color:var(--muted);font-size:1.02rem;line-height:1.62;margin:0;max-width:40em;}
+  .pillar .p2{margin-top:.9em;}
+  @media(max-width:860px){
+    .pillar,.pillar.wide,.pillar.narrow{grid-column:span 12;}
+  }
+
+  /* ================= DOMAINS ================= */
+  .dom-intro{color:var(--muted);font-size:1.12rem;line-height:1.7;max-width:40em;margin:-26px 0 44px;}
+  .dom-intro b{color:var(--ink);font-weight:500;}
+  .verticals{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:22px;}
+  .vert{border:1px solid var(--line);border-radius:14px;padding:26px 24px 28px;
+    background:linear-gradient(180deg,var(--panel),var(--stone-2));transition:border-color .3s var(--ease),transform .3s var(--ease);}
+  .vert:hover{border-color:var(--line-2);transform:translateY(-3px);}
+  .vert .status{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;border:1px solid var(--gold-dim);color:var(--gold);}
+  .vert .status.proven{background:rgba(199,154,75,.12);color:var(--gold-hi);}
+  .vert .status.extending{border-color:var(--line-2);color:var(--muted);}
+  html.ko .vert .status{letter-spacing:.02em;}
+  .vert .status .dot{width:5px;height:5px;border-radius:50%;background:var(--gold-hi);box-shadow:0 0 7px var(--gold-hi);}
+  @media(prefers-reduced-motion:no-preference){.vert .status.emerging .dot{animation:beacon 2.6s var(--ease) infinite;}}
+  .vert h3{font-family:var(--serif);font-weight:600;font-size:1.28rem;margin:16px 0 .45em;letter-spacing:-.005em;}
+  html.ko .vert h3{font-weight:700;}
+  .vert p{color:var(--muted);font-size:.98rem;line-height:1.56;margin:0;}
+
+  .spotlight{border:1px solid var(--line);border-radius:16px;overflow:hidden;
+    display:grid;grid-template-columns:1.22fr .88fr;background:linear-gradient(180deg,var(--panel),var(--stone-2));}
+  .spot-main{padding:40px;border-right:1px solid var(--line);position:relative;}
+  .spot-main::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(80% 100% at 0% 0%,rgba(199,154,75,.07),transparent 55%);}
+  .spot-main .eyebrow{display:block;margin-bottom:16px;}
+  .spot-main h3{font-family:var(--serif);font-weight:600;font-size:1.8rem;line-height:1.16;margin:0 0 .6em;position:relative;letter-spacing:-.01em;}
+  html.ko .spot-main h3{font-weight:700;}
+  .spot-main p{color:var(--muted);font-size:1.05rem;line-height:1.66;margin:0 0 1.1em;position:relative;max-width:38em;}
+  .spot-main p b{color:var(--ink);font-weight:500;}
+  .spot-main .echo{font-family:var(--serif);font-style:italic;color:var(--gold-hi);font-size:1.18rem;position:relative;margin:.2em 0 0;}
+  html.ko .spot-main .echo{font-style:normal;}
+  .spot-rec{padding:38px 34px;background:var(--stone-2);}
+  .rk-head{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+  html.ko .rk-head{letter-spacing:.04em;}
+  .rk{display:flex;flex-direction:column;gap:22px;}
+  .rk-item{position:relative;padding-left:22px;}
+  .rk-item::before{content:"";position:absolute;left:0;top:6px;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--gold);}
+  .rk-item .rk-t{font-size:.98rem;color:var(--ink);line-height:1.42;font-weight:500;}
+  .rk-item .rk-d{font-size:.9rem;color:var(--muted);line-height:1.52;margin-top:4px;}
+  @media(max-width:860px){
+    .verticals{grid-template-columns:1fr;}
+    .spotlight{grid-template-columns:1fr;}
+    .spot-main{border-right:none;border-bottom:1px solid var(--line);padding:32px;}
+    .spot-rec{padding:32px;}
+  }
+
+  /* ================= PRINCIPLES ================= */
+  .principles{background:var(--stone-2);}
+  .prin-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .prin{background:var(--stone-2);padding:30px 26px 34px;}
+  .prin .n{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;}
+  .prin h4{font-family:var(--serif);font-weight:600;font-size:1.22rem;margin:16px 0 .5em;line-height:1.2;}
+  html.ko .prin h4{font-weight:700;}
+  .prin p{color:var(--muted);font-size:.95rem;line-height:1.58;margin:0;}
+  @media(max-width:860px){.prin-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.prin-grid{grid-template-columns:1fr;}}
+
+  /* ================= CONTACT ================= */
+  .contact{text-align:center;padding:130px 0;border-top:1px solid var(--line);
+    background:radial-gradient(120% 100% at 50% 120%,rgba(199,154,75,.1),transparent 60%);}
+  .contact .seal-lg{width:52px;height:52px;color:var(--gold);margin:0 auto 26px;display:block;}
+  .contact h2{font-family:var(--serif);font-weight:600;font-size:clamp(2rem,4.4vw,3.1rem);line-height:1.1;margin:0 0 .4em;letter-spacing:-.01em;text-wrap:balance;}
+  html.ko .contact h2{font-weight:700;line-height:1.24;}
+  .contact p{color:var(--muted);font-size:1.12rem;max-width:32em;margin:0 auto 2.2em;}
+  .mailto{
+    display:inline-flex;align-items:center;gap:12px;
+    font-family:var(--mono);font-size:1.05rem;letter-spacing:.02em;
+    color:var(--gold-hi);border:1px solid var(--line-2);border-radius:10px;
+    padding:15px 26px;transition:all .22s var(--ease);
+  }
+  .mailto:hover{border-color:var(--gold);background:rgba(199,154,75,.08);transform:translateY(-2px);}
+
+  /* ================= FOOTER ================= */
+  footer{border-top:1px solid var(--line);padding:44px 0;}
+  .foot-in{display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:17px;}
+  .foot-brand .seal{width:18px;height:18px;color:var(--gold);}
+  .foot-meta{font-size:13.5px;color:var(--muted-2);line-height:1.7;}
+  .foot-meta .sep{color:var(--line-2);margin:0 8px;}
+
+  /* ---- reveal ---- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;}
+    .scroll-hint .rule{opacity:.5;}
+  }
+</style>
+</head>
+<body>
+<div class="nav-bg" id="navbg"></div>
+<nav>
+  <a class="brand" href="#top" aria-label="Vallera home">
+    <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+      <path d="M12 2.5 20.5 6v6.4c0 4.4-3.4 7.8-8.5 9.1C6.9 20.2 3.5 16.8 3.5 12.4V6L12 2.5Z" stroke="var(--gold)"/>
+      <path d="M8.4 12.2h7.2M9.6 9.4v5.6M12 9.4v5.6M14.4 9.4v5.6" stroke="var(--gold)" stroke-width="1"/>
+    </svg>
+    <span><b>Vallera</b></span>
+  </a>
+  <div class="nav-links">
+    <a href="#thesis"><span class="en">Thesis</span><span class="ko">비전</span></a>
+    <a href="#capabilities"><span class="en">Capabilities</span><span class="ko">역량</span></a>
+    <a href="#domains"><span class="en">Domains</span><span class="ko">적용 분야</span></a>
+    <a href="#principles"><span class="en">Principles</span><span class="ko">원칙</span></a>
+    <a href="#contact"><span class="en">Contact</span><span class="ko">연락</span></a>
+    <button class="lang-btn" id="lang" aria-label="Toggle language"><span class="en">한국어</span><span class="ko">English</span></button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="perimeter" aria-hidden="true"></canvas>
+  <div class="hero-veil"></div>
+  <div class="wrap hero-inner">
+    <span class="eyebrow"><span class="en">Sovereign Agentic AI</span><span class="ko">주권형 에이전틱 AI</span></span>
+    <h1>
+      <span class="en">Intelligence that never leaves <span class="accent">your walls.</span></span>
+      <span class="ko">당신의 <span class="accent">벽</span>을 넘지 않는 지능.</span>
+    </h1>
+    <p class="lead">
+      <span class="en">Vallera builds <b>air-gapped agentic systems</b> for regulated industries — AI that reasons, remembers, and decides entirely inside your perimeter. No cloud. No leakage. Fully auditable.</span>
+      <span class="ko">발레라는 규제 산업을 위한 <b>에어갭(폐쇄망) 에이전틱 시스템</b>을 만듭니다. 클라우드 없이, 유출 없이, 완전한 감사 가능성 안에서 — 당신의 경계 내부에서 추론하고 기억하고 판단하는 AI입니다.</span>
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#contact">
+        <span class="en">Start a conversation</span><span class="ko">대화 시작하기</span>
+        <span class="arrow">→</span>
+      </a>
+      <a class="btn btn-ghost" href="#thesis">
+        <span class="en">Read the thesis</span><span class="ko">비전 읽기</span>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span class="en">Inside the wall</span><span class="ko">벽 안으로</span>
+    <span class="rule"></span>
+  </div>
+</header>
+
+<!-- ===== THESIS ===== -->
+<section class="band thesis" id="thesis">
+  <div class="wrap">
+    <div class="thesis-grid">
+      <div class="thesis-body reveal">
+        <span class="eyebrow"><span class="en">The thesis</span><span class="ko">우리의 명제</span></span>
+        <h2 style="font-family:var(--serif);font-weight:600;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.12;letter-spacing:-.01em;margin:.5em 0 .8em;">
+          <span class="en">The wall is the point.</span><span class="ko">벽이 곧 핵심입니다.</span>
+        </h2>
+        <p class="pull">
+          <span class="en">Regulated industries cannot send their most sensitive documents and decisions to someone else's cloud. The prevailing AI stack assumes they will.</span>
+          <span class="ko">규제 산업은 가장 민감한 문서와 의사결정을 남의 클라우드로 보낼 수 없습니다. 그러나 지금의 AI 스택은 그럴 것이라고 전제합니다.</span>
+        </p>
+        <p>
+          <span class="en">Insurance, finance, construction, manufacturing, energy — the work that matters most lives behind a wall, for good reason: law, liability, and sovereignty. <b>Vallera inverts the default.</b> Instead of sending the data out to the intelligence, we bring the intelligence in to the data.</span>
+          <span class="ko">보험, 금융, 건설, 제조, 에너지 — 가장 중요한 업무는 법·책임·주권이라는 분명한 이유로 벽 안에 존재합니다. <b>발레라는 이 기본 전제를 뒤집습니다.</b> 데이터를 지능이 있는 곳으로 보내는 대신, 지능을 데이터가 있는 곳으로 가져옵니다.</span>
+        </p>
+        <p>
+          <span class="en">Open-weight models. On-premise. Agentic. The result is a system that grows more capable with every interaction — while never crossing the perimeter, and leaving an audit trail behind every decision.</span>
+          <span class="ko">오픈웨이트 모델, 온프레미스, 에이전틱. 그 결과는 매 상호작용마다 더 유능해지면서도 경계를 절대 넘지 않고, 모든 의사결정 뒤에 감사 추적을 남기는 시스템입니다.</span>
+        </p>
+      </div>
+      <aside class="thesis-side reveal">
+        <span class="eyebrow"><span class="en">The inversion</span><span class="ko">전환</span></span>
+        <div class="contrast">
+          <div class="row"><span class="k"><span class="en">Data</span><span class="ko">데이터</span></span><span><span class="old"><span class="en">leaves the perimeter</span><span class="ko">경계를 떠남</span></span> · <span class="new"><span class="en">stays home</span><span class="ko">내부에 상주</span></span></span></div>
+          <div class="row"><span class="k"><span class="en">Model</span><span class="ko">모델</span></span><span><span class="old"><span class="en">rented API</span><span class="ko">임대형 API</span></span> · <span class="new"><span class="en">open-weight, owned</span><span class="ko">오픈웨이트·자가보유</span></span></span></div>
+          <div class="row"><span class="k"><span class="en">Answer</span><span class="ko">응답</span></span><span><span class="old"><span class="en">a black box</span><span class="ko">블랙박스</span></span> · <span class="new"><span class="en">an audit trail</span><span class="ko">감사 추적</span></span></span></div>
+          <div class="row"><span class="k"><span class="en">Value</span><span class="ko">가치</span></span><span><span class="old"><span class="en">a subscription</span><span class="ko">구독</span></span> · <span class="new"><span class="en">a compounding moat</span><span class="ko">축적되는 해자</span></span></span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAPABILITIES ===== -->
+<section class="band" id="capabilities">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow"><span class="en">Capabilities</span><span class="ko">역량</span></span>
+      <h2><span class="en">Four foundations, one perimeter.</span><span class="ko">네 개의 기둥, 하나의 경계.</span></h2>
+    </div>
+    <div class="pillars-grid">
+
+      <article class="pillar wide reveal">
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <circle cx="9" cy="12" r="3.2"/><circle cx="31" cy="9" r="3.2"/><circle cx="20" cy="24" r="3.6"/><circle cx="31" cy="31" r="3.2"/>
+          <path d="M11.6 13.6 17 22M28 10.5 22.4 22M22.8 26.2 28.4 30M23 24l6-1.5"/>
+        </svg>
+        <span class="tag">Reasoning</span>
+        <h3><span class="en">Sovereign Agentic RAG</span><span class="ko">주권형 에이전틱 RAG</span></h3>
+        <p>
+          <span class="en">Hybrid graph-and-vector retrieval with an analytical reasoning layer, running on open-weight models inside a closed network. It goes beyond finding passages — it structures, compares, and delivers explainable judgments a domain expert can defend.</span>
+          <span class="ko">그래프와 벡터를 결합한 하이브리드 검색 위에 분석적 추론 계층을 얹어, 폐쇄망 안의 오픈웨이트 모델로 구동됩니다. 단순히 문단을 찾는 데 그치지 않고 — 구조화하고, 비교하고, 도메인 전문가가 방어할 수 있는 설명 가능한 판단을 내립니다.</span>
+        </p>
+        <p class="p2">
+          <span class="en">Foundations validated in peer-reviewed research, IEEE&nbsp;COMPSAC&nbsp;2026.</span>
+          <span class="ko">동료 심사 연구로 검증된 기반 — IEEE&nbsp;COMPSAC&nbsp;2026 발표.</span>
+        </p>
+      </article>
+
+      <article class="pillar narrow reveal">
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <rect x="7" y="6" width="19" height="24" rx="2"/><path d="M13 6v24M7 14h6M7 22h6"/>
+          <circle cx="27" cy="27" r="7"/><path d="M32 32l4 4"/>
+        </svg>
+        <span class="tag">Perception</span>
+        <h3><span class="en">Multimodal Knowledge Graphs</span><span class="ko">멀티모달 지식 그래프</span></h3>
+        <p>
+          <span class="en">Documents are not just text. Tables, charts, blueprints, and formulae become a cross-modal reasoning graph that answers questions plain search cannot — and generalizes across insurance, construction, and engineering.</span>
+          <span class="ko">문서는 텍스트만이 아닙니다. 표·차트·도면·수식이 하나의 교차모달 추론 그래프가 되어 일반 검색이 답할 수 없는 질문에 답하고, 보험·건설·엔지니어링으로 확장됩니다.</span>
+        </p>
+      </article>
+
+      <article class="pillar narrow reveal">
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <ellipse cx="20" cy="11" rx="12" ry="4.5"/><path d="M8 11v9c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-9"/>
+          <path d="M8 20v9c0 2.5 5.4 4.5 12 4.5s12-2 12-4.5v-9"/>
+        </svg>
+        <span class="tag">Memory</span>
+        <h3><span class="en">Memory that learns without forgetting</span><span class="ko">잊지 않고 학습하는 메모리</span></h3>
+        <p>
+          <span class="en">Agents that improve from every interaction, held to a quality gate that keeps memory trustworthy — with provenance behind every fact. Continuous learning without silent corruption.</span>
+          <span class="ko">매 상호작용에서 학습하되, 메모리의 신뢰를 지키는 품질 게이트를 통과한 것만 남깁니다. 모든 사실에 출처를 남겨 — 조용한 오염 없는 지속 학습을 실현합니다.</span>
+        </p>
+      </article>
+
+      <article class="pillar wide reveal">
+        <span class="badge"><span class="dot"></span><span class="en">Emerging</span><span class="ko">연구 단계</span></span>
+        <svg class="glyph" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 26c4 0 4-12 8-12s4 12 8 12 4-12 8-12 4 12 8 12"/>
+          <path d="M4 33h32" stroke-dasharray="2 3"/><path d="M6 7v13M34 7v13" opacity=".5"/>
+        </svg>
+        <span class="tag">Simulation</span>
+        <h3><span class="en">Agentic Physical Simulation</span><span class="ko">에이전틱 물리 시뮬레이션</span></h3>
+        <p>
+          <span class="en">Autonomous agents that plan, run, verify, and optimize physics simulation — sensing the environment, reasoning about the model, and correcting themselves. A sovereign path for manufacturing and engineering that reduces dependence on foreign solvers.</span>
+          <span class="ko">물리 시뮬레이션을 스스로 계획·수행·검증·최적화하는 자율 에이전트 — 환경을 감지하고, 모델을 추론하고, 스스로 교정합니다. 해외 솔버 의존을 낮추는, 제조·엔지니어링을 위한 주권형 경로입니다.</span>
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== DOMAINS ===== -->
+<section class="band" id="domains">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow"><span class="en">The horizontal thesis</span><span class="ko">수평 플랫폼</span></span>
+      <h2><span class="en">One engine, many walls.</span><span class="ko">하나의 엔진, 여러 개의 벽.</span></h2>
+    </div>
+    <p class="dom-intro reveal">
+      <span class="en">The same air-gapped agentic core — retrieval, knowledge graph, memory — points at any industry whose most valuable documents live behind a wall. Each vertical adds a domain ontology the platform keeps. <b>The moat deepens with every deployment.</b></span>
+      <span class="ko">검색·지식그래프·메모리로 이뤄진 동일한 에어갭 에이전틱 코어는, 가장 값진 문서가 벽 안에 있는 어떤 산업에도 적용됩니다. 각 분야는 플랫폼이 축적하는 도메인 온톨로지를 더합니다. <b>도입이 늘수록 해자는 깊어집니다.</b></span>
+    </p>
+
+    <div class="verticals">
+      <article class="vert reveal">
+        <span class="status proven"><span class="en">Proven</span><span class="ko">검증됨</span></span>
+        <h3><span class="en">Insurance</span><span class="ko">보험</span></h3>
+        <p><span class="en">Multi-company coverage analysis in a closed network — the anchor domain, validated in peer-reviewed research.</span><span class="ko">폐쇄망에서의 다사(多社) 보장 분석 — 동료 심사로 검증된 기준 도메인.</span></p>
+      </article>
+      <article class="vert reveal">
+        <span class="status extending"><span class="en">Extending</span><span class="ko">확장 중</span></span>
+        <h3><span class="en">Engineering &amp; Manufacturing</span><span class="ko">엔지니어링·제조</span></h3>
+        <p><span class="en">Blueprints, specifications, and physics simulation — cross-modal reasoning and a sovereign path away from foreign solvers.</span><span class="ko">도면·사양서·물리 시뮬레이션 — 교차모달 추론과 해외 솔버 의존을 줄이는 주권형 경로.</span></p>
+      </article>
+      <article class="vert reveal">
+        <span class="status emerging"><span class="dot"></span><span class="en">Emerging</span><span class="ko">연구 단계</span></span>
+        <h3><span class="en">Life Sciences</span><span class="ko">생명과학</span></h3>
+        <p><span class="en">Agentic drug discovery over a biomedical knowledge graph — where compound IP never leaves the lab.</span><span class="ko">바이오메디컬 지식그래프 위의 에이전틱 신약개발 — 화합물 IP가 실험실 밖으로 나가지 않는 곳.</span></p>
+      </article>
+    </div>
+
+    <div class="spotlight reveal">
+      <div class="spot-main">
+        <span class="eyebrow"><span class="en">Spotlight · Life Sciences</span><span class="ko">스포트라이트 · 생명과학</span></span>
+        <h3><span class="en">Sovereign drug discovery</span><span class="ko">주권형 신약개발</span></h3>
+        <p>
+          <span class="en">Compound structures, assay results, trial data — the most guarded IP in any industry, and the clearest case for intelligence that reasons <b>behind the wall</b>.</span>
+          <span class="ko">화합물 구조, 분석 결과, 임상 데이터 — 어느 산업보다 엄격히 보호되는 IP이자, <b>벽 안에서</b> 추론하는 지능이 가장 절실한 영역입니다.</span>
+        </p>
+        <p>
+          <span class="en">Vallera's approach continues a proven line of work: <b>agentic reasoning over a drug–target–disease knowledge graph</b>, generating and prioritizing candidate molecules in an air-gapped environment — with a provenance trail behind every hypothesis.</span>
+          <span class="ko">발레라의 접근은 검증된 작업의 연장선에 있습니다. <b>약물–타겟–질병 지식그래프 위의 에이전틱 추론</b>으로, 에어갭 환경에서 후보 물질을 생성·우선순위화하며 — 모든 가설 뒤에 출처를 남깁니다.</span>
+        </p>
+        <p class="echo"><span class="en">“From hypothesis to AI.”</span><span class="ko">“가설에서 AI로.”</span></p>
+      </div>
+      <aside class="spot-rec">
+        <div class="rk-head"><span class="en">Founder track record</span><span class="ko">파운더 이력</span></div>
+        <div class="rk">
+          <div class="rk-item">
+            <div class="rk-t"><span class="en">Korea AI Center for Drug Discovery &amp; Development</span><span class="ko">인공지능 신약개발지원센터 (KAICD)</span></div>
+            <div class="rk-d"><span class="en">Director General · 2019–2020 · backed by KPBMA &amp; KHIDI</span><span class="ko">부센터장 · 2019–2020 · 한국제약바이오협회·보건산업진흥원 지원</span></div>
+          </div>
+          <div class="rk-item">
+            <div class="rk-t"><span class="en">Korea's first national AI drug-discovery pilot</span><span class="ko">국내 최초 국가 AI 신약개발 시범사업</span></div>
+            <div class="rk-d"><span class="en">MolDQN reinforcement learning × a drug–target–disease knowledge graph — 256 AI-generated candidates narrowed to 4 optimized pancreatic-cancer leads, in partnership with a leading Korean pharmaceutical company.</span><span class="ko">MolDQN 강화학습 × 약물–타겟–질병 지식그래프 — 256종의 AI 생성 후보를 4종의 췌장암 선도물질로 압축, 국내 유수 제약사와 협력.</span></div>
+          </div>
+          <div class="rk-item">
+            <div class="rk-t"><span class="en">Host · AI Pharma Korea 2019</span><span class="ko">주최 · AI Pharma Korea 2019</span></div>
+            <div class="rk-d"><span class="en">Convened KHIDI &amp; KPBMA leadership with speakers from the US, Canada, and the UK.</span><span class="ko">보건산업진흥원·제약바이오협회 지도부와 미국·캐나다·영국 연사 초청.</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRINCIPLES ===== -->
+<section class="band principles" id="principles">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <span class="eyebrow"><span class="en">Principles</span><span class="ko">원칙</span></span>
+      <h2><span class="en">Non-negotiable by design.</span><span class="ko">설계에서부터 타협하지 않는 것.</span></h2>
+    </div>
+    <div class="prin-grid reveal">
+      <div class="prin">
+        <span class="n"><span class="en">Air-gapped</span><span class="ko">에어갭</span></span>
+        <h4><span class="en">Runs behind the wall</span><span class="ko">벽 안에서 구동</span></h4>
+        <p><span class="en">On-premise by default. Nothing sensitive crosses the perimeter — not the data, not the decisions.</span><span class="ko">온프레미스가 기본입니다. 민감한 것은 데이터도 의사결정도 경계를 넘지 않습니다.</span></p>
+      </div>
+      <div class="prin">
+        <span class="n"><span class="en">Open-weight</span><span class="ko">오픈웨이트</span></span>
+        <h4><span class="en">No vendor lock-in</span><span class="ko">종속 없는 구조</span></h4>
+        <p><span class="en">You own the models and the intelligence they hold. No API meter, no data-sovereignty risk, no one to depend on.</span><span class="ko">모델과 그 안의 지능을 당신이 소유합니다. API 과금도, 데이터 주권 리스크도, 의존할 대상도 없습니다.</span></p>
+      </div>
+      <div class="prin">
+        <span class="n"><span class="en">Auditable</span><span class="ko">감사 가능</span></span>
+        <h4><span class="en">Every decision, traceable</span><span class="ko">추적 가능한 판단</span></h4>
+        <p><span class="en">Regulation demands traceability. Provenance and reasoning are first-class, not bolted on after the fact.</span><span class="ko">규제는 추적 가능성을 요구합니다. 출처와 추론 과정은 사후 부가물이 아닌 일급 요소입니다.</span></p>
+      </div>
+      <div class="prin">
+        <span class="n"><span class="en">Compounding</span><span class="ko">축적</span></span>
+        <h4><span class="en">A moat that grows</span><span class="ko">자라나는 해자</span></h4>
+        <p><span class="en">Each deployment turns domain knowledge and decision history into an advantage a competitor cannot buy.</span><span class="ko">각 도입은 도메인 지식과 의사결정 이력을 경쟁자가 살 수 없는 우위로 바꿉니다.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <svg class="seal-lg reveal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+      <path d="M12 2.5 20.5 6v6.4c0 4.4-3.4 7.8-8.5 9.1C6.9 20.2 3.5 16.8 3.5 12.4V6L12 2.5Z"/>
+      <path d="M8.4 12.2h7.2M9.6 9.4v5.6M12 9.4v5.6M14.4 9.4v5.6" stroke-width="1"/>
+    </svg>
+    <h2 class="reveal"><span class="en">Build inside the wall.</span><span class="ko">벽 안에서 만들어 갑니다.</span></h2>
+    <p class="reveal"><span class="en">Vallera is partnering with a select group of enterprises in regulated industries. If sovereignty is a requirement, not a preference — let's talk.</span><span class="ko">발레라는 규제 산업의 소수 기업과 협력하고 있습니다. 주권이 선호가 아니라 요건이라면 — 이야기 나눠요.</span></p>
+    <a class="mailto reveal" href="mailto:chjoo@vallera.ai?subject=Vallera%20%E2%80%94%20Inquiry">chjoo@vallera.ai</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-in">
+    <a class="foot-brand" href="#top">
+      <svg class="seal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+        <path d="M12 2.5 20.5 6v6.4c0 4.4-3.4 7.8-8.5 9.1C6.9 20.2 3.5 16.8 3.5 12.4V6L12 2.5Z"/>
+      </svg>
+      <span>Vallera</span>
+    </a>
+    <div class="foot-meta">
+      <span class="en">Founded by James Chulhwee Joo, Ph.D.<span class="sep">|</span>Sovereign agentic AI for regulated industries<span class="sep">|</span>© 2026 Vallera</span>
+      <span class="ko">Founder — 주철희(James Chulhwee Joo), Ph.D.<span class="sep">|</span>규제 산업을 위한 주권형 에이전틱 AI<span class="sep">|</span>© 2026 Vallera</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- language toggle ---------- */
+  var root=document.documentElement;
+  var langBtn=document.getElementById('lang');
+  langBtn.addEventListener('click',function(){
+    root.classList.toggle('ko');
+    root.lang=root.classList.contains('ko')?'ko':'en';
+  });
+
+  /* ---------- nav background on scroll ---------- */
+  var navbg=document.getElementById('navbg');
+  function onScroll(){navbg.classList.toggle('on',window.scrollY>40);}
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+
+  /* ---------- reveal on scroll ---------- */
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce && 'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});
+  }
+
+  /* ---------- perimeter canvas ---------- */
+  var canvas=document.getElementById('perimeter');
+  var ctx=canvas.getContext('2d');
+  var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
+  var wall={},nodes=[],outside=[],links=[];
+
+  function rrect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+  }
+
+  function build(){
+    var rect=canvas.getBoundingClientRect();
+    W=rect.width;H=rect.height;
+    canvas.width=W*DPR;canvas.height=H*DPR;
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+
+    // wall geometry: right-of-center, tall enclosure
+    var wW=Math.min(W*0.5,560), wH=Math.min(H*0.66,470);
+    var cx=W>900?W*0.68:W*0.5, cy=H*0.5;
+    wall={x:cx-wW/2,y:cy-wH/2,w:wW,h:wH,r:26,cx:cx,cy:cy};
+
+    // agent nodes inside the wall
+    nodes=[];
+    var pad=64;
+    var pts=[[.28,.26],[.7,.2],[.5,.5],[.24,.68],[.76,.62],[.46,.82],[.86,.42]];
+    pts.forEach(function(p,i){
+      nodes.push({
+        x:wall.x+pad+p[0]*(wall.w-pad*2),
+        y:wall.y+pad+p[1]*(wall.h-pad*2),
+        r:i===2?4.4:2.6+Math.random()*1.2,
+        ph:Math.random()*Math.PI*2,
+        sp:0.4+Math.random()*0.5,
+        hub:i===2
+      });
+    });
+    // links between nearby nodes
+    links=[];
+    for(var a=0;a<nodes.length;a++)for(var b=a+1;b<nodes.length;b++){
+      var dx=nodes[a].x-nodes[b].x,dy=nodes[a].y-nodes[b].y;
+      var d=Math.sqrt(dx*dx+dy*dy);
+      if(d<Math.min(wall.w,wall.h)*0.62){links.push({a:a,b:b,ph:Math.random()*Math.PI*2});}
+    }
+
+    // outside particles (incoming data, deflected at the wall)
+    outside=[];
+    var N=W<700?14:26;
+    for(var k=0;k<N;k++)spawnOutside(true);
+  }
+
+  function spawnOutside(init){
+    // spawn on the left / edges, drift toward the wall
+    var fromLeft=Math.random()<0.7;
+    var x,y;
+    if(fromLeft){x=-20-Math.random()*W*0.15;y=Math.random()*H;}
+    else{ // top or bottom
+      x=Math.random()*W*0.6;
+      y=Math.random()<0.5?-20:H+20;
+    }
+    var tx=wall.cx+(Math.random()-0.5)*wall.w*0.5;
+    var ty=wall.cy+(Math.random()-0.5)*wall.h*0.5;
+    var ang=Math.atan2(ty-y,tx-x);
+    var sp=0.18+Math.random()*0.24;
+    outside.push({
+      x:x,y:y,
+      vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,
+      life:0,max:1,
+      seed:Math.random()*6.28,
+      halted:false,
+      t: init?Math.random():0
+    });
+  }
+
+  // signed distance-ish check: is point inside the wall rect (with margin)?
+  function nearWall(x,y,margin){
+    return x>wall.x-margin && x<wall.x+wall.w+margin &&
+           y>wall.y-margin && y<wall.y+wall.h+margin;
+  }
+  function insideWall(x,y){
+    return x>wall.x && x<wall.x+wall.w && y>wall.y && y<wall.y+wall.h;
+  }
+
+  var t0=null;
+  function frame(ts){
+    if(t0===null)t0=ts;
+    var tt=(ts-t0)/1000;
+    ctx.clearRect(0,0,W,H);
+
+    /* ambient wall glow */
+    var g=ctx.createRadialGradient(wall.cx,wall.cy,20,wall.cx,wall.cy,Math.max(wall.w,wall.h)*0.9);
+    g.addColorStop(0,'rgba(199,154,75,0.10)');
+    g.addColorStop(1,'rgba(199,154,75,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+    /* outside particles */
+    for(var i=outside.length-1;i>=0;i--){
+      var p=outside[i];
+      p.t+=0.016;
+      if(!p.halted){
+        // approaching — decelerate & deflect when meeting the wall boundary
+        var nextIn=nearWall(p.x+p.vx*40,p.y+p.vy*40,6);
+        if(nearWall(p.x,p.y,10) && nextIn){
+          p.halted=true;p.haltT=0;
+          // tangential deflection along the wall
+          var toCx=wall.cx-p.x, toCy=wall.cy-p.y;
+          p.vx=-toCy*0.006; p.vy=toCx*0.006;
+        }else{
+          p.x+=p.vx;p.y+=p.vy;
+        }
+      }else{
+        p.haltT+=0.016;
+        // slide briefly along the barrier then fade
+        p.x+=p.vx;p.y+=p.vy;
+        p.vx*=0.965;p.vy*=0.965;
+      }
+      var flick=0.5+0.5*Math.sin(p.t*2+p.seed);
+      var alpha=p.halted?Math.max(0,0.5-p.haltT*0.5):0.16+0.16*flick;
+      if(insideWall(p.x,p.y))alpha=0; // never render inside — the gap holds
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,1.5,0,6.2832);
+      ctx.fillStyle='rgba(150,168,190,'+alpha.toFixed(3)+')';
+      ctx.fill();
+      // recycle
+      if(p.halted && p.haltT>1.4){outside.splice(i,1);spawnOutside(false);}
+      else if(p.x>W+40||p.x<-80||p.y>H+60||p.y<-80){outside.splice(i,1);spawnOutside(false);}
+    }
+
+    /* the wall — double stroke, glowing seam */
+    ctx.save();
+    rrect(wall.x,wall.y,wall.w,wall.h,wall.r);
+    ctx.strokeStyle='rgba(199,154,75,0.34)';
+    ctx.lineWidth=1.4;
+    ctx.shadowColor='rgba(199,154,75,0.5)';
+    ctx.shadowBlur=16;
+    ctx.stroke();
+    ctx.shadowBlur=0;
+    // inner hairline
+    rrect(wall.x+7,wall.y+7,wall.w-14,wall.h-14,wall.r-6);
+    ctx.strokeStyle='rgba(199,154,75,0.10)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+    // crenellation ticks along the top edge (rampart)
+    ctx.strokeStyle='rgba(199,154,75,0.22)';
+    ctx.lineWidth=1;
+    var step=26;
+    for(var cxp=wall.x+wall.r;cxp<wall.x+wall.w-wall.r;cxp+=step){
+      ctx.beginPath();ctx.moveTo(cxp,wall.y);ctx.lineTo(cxp,wall.y-5);ctx.stroke();
+    }
+    ctx.restore();
+
+    /* links inside */
+    links.forEach(function(l){
+      var na=nodes[l.a],nb=nodes[l.b];
+      var pulse=0.5+0.5*Math.sin(tt*0.9+l.ph);
+      ctx.beginPath();
+      ctx.moveTo(na.x,na.y);ctx.lineTo(nb.x,nb.y);
+      ctx.strokeStyle='rgba(199,154,75,'+(0.05+pulse*0.14).toFixed(3)+')';
+      ctx.lineWidth=1;
+      ctx.stroke();
+    });
+
+    /* nodes inside */
+    nodes.forEach(function(n){
+      var pulse=0.5+0.5*Math.sin(tt*n.sp+n.ph);
+      var r=n.r+(n.hub?pulse*1.4:pulse*0.8);
+      if(n.hub){
+        ctx.beginPath();ctx.arc(n.x,n.y,r+6+pulse*3,0,6.2832);
+        ctx.fillStyle='rgba(199,154,75,'+(0.05+pulse*0.05).toFixed(3)+')';ctx.fill();
+      }
+      ctx.beginPath();ctx.arc(n.x,n.y,r,0,6.2832);
+      ctx.fillStyle=n.hub?'rgba(227,189,118,0.95)':'rgba(210,180,120,'+(0.55+pulse*0.4).toFixed(3)+')';
+      ctx.shadowColor='rgba(199,154,75,0.6)';ctx.shadowBlur=n.hub?14:7;
+      ctx.fill();ctx.shadowBlur=0;
+    });
+
+    raf=requestAnimationFrame(frame);
+  }
+
+  function staticFrame(){
+    // reduced-motion: one composed still
+    ctx.clearRect(0,0,W,H);
+    var g=ctx.createRadialGradient(wall.cx,wall.cy,20,wall.cx,wall.cy,Math.max(wall.w,wall.h)*0.9);
+    g.addColorStop(0,'rgba(199,154,75,0.10)');g.addColorStop(1,'rgba(199,154,75,0)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    rrect(wall.x,wall.y,wall.w,wall.h,wall.r);
+    ctx.strokeStyle='rgba(199,154,75,0.34)';ctx.lineWidth=1.4;ctx.stroke();
+    links.forEach(function(l){var na=nodes[l.a],nb=nodes[l.b];ctx.beginPath();ctx.moveTo(na.x,na.y);ctx.lineTo(nb.x,nb.y);ctx.strokeStyle='rgba(199,154,75,0.12)';ctx.lineWidth=1;ctx.stroke();});
+    nodes.forEach(function(n){ctx.beginPath();ctx.arc(n.x,n.y,n.r+(n.hub?2:0),0,6.2832);ctx.fillStyle=n.hub?'rgba(227,189,118,0.95)':'rgba(210,180,120,0.7)';ctx.fill();});
+  }
+
+  var raf=null;
+  function start(){
+    if(raf)cancelAnimationFrame(raf);
+    build();
+    if(reduce){staticFrame();}
+    else{t0=null;raf=requestAnimationFrame(frame);}
+  }
+
+  var rz;
+  window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(start,180);});
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){if(raf){cancelAnimationFrame(raf);raf=null;}}
+    else if(!reduce && !raf){t0=null;raf=requestAnimationFrame(frame);}
+  });
+
+  start();
+})();
+</script>
+
+</body>
+</html>
